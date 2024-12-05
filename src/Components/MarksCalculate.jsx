@@ -8,9 +8,9 @@ const SemesterMarksCalculator = () => {
   const [downloading, setDownloading] = useState(false);
 
   const calculateCgpa = () => {
+   
     let totalCredits = 0;
     let totalGradePoints = 0;
-
     marks.forEach(mark => {
       let credit = mark.credit;
       let grade = mark.grade;
@@ -56,21 +56,28 @@ const SemesterMarksCalculator = () => {
     });
   };
 
+  const getCgpaColorClass = (cgpa) => {
+    if (cgpa >= 5.1 && cgpa <= 6.0) return 'text-red-500'; 
+    if (cgpa >= 6.1 && cgpa <= 7.0) return 'text-orange-500'; 
+    if (cgpa >= 7.1 && cgpa <= 8.0) return 'text-yellow-500'; 
+    if (cgpa >= 8.1 && cgpa <= 9.0) return 'text-green-500'; 
+    if (cgpa >= 9.1 && cgpa <= 10.0) return 'bg-gradient-to-b from-purple-500 to-blue-400 bg-clip-text text-transparent'; 
+    return 'text-white'; 
+  };
+  
+
   return (
-    
-<>
-
-
-<div className='text-center bg-black p-5'>
+    <>
+    <div className='text-center bg-black p-5'>
 
     <span className=" bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-4xl inline-block font-bold">SRM GPA Calculator</span>
     </div>
     <div className='bg-black min-h-screen w-full'>
     <div className="flex justify-center items-center h-full ">
-      <div className="w-full max-w-md p-6 lg:mt-[120px]" id="calculator-container">
+      <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[70px]" id="calculator-container">
      
         {marks.map((mark, index) => (
-          <div key={index} className="mb-4 flex items-center ">
+          <div key={index} className="mb-4 flex justify-center items-center ">
             <span className="mr-4 text-lg font-semibold">{index + 1}.</span>
             <input
               type="number"
@@ -98,18 +105,21 @@ const SemesterMarksCalculator = () => {
           </div>
         ))}
         <div className="flex justify-center space-x-4">
-          <button onClick={addSubject} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button onClick={addSubject} className="bg-blue-500 hover:bg-blue-600 w-60 text-white  font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
             Add Subject
           </button>
-          <button onClick={calculateCgpa} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button onClick={calculateCgpa } className="bg-green-500 hover:bg-green-600 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline">
             Calculate CGPA
           </button>
-          <button onClick={downloadAsImage} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          
+        </div>
+        <div className='flex items-center justify-center pt-5'>
+        <button onClick={downloadAsImage} className="bg-gray-500 hover:bg-gray-600 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline">
             Download as Image
           </button>
         </div>
         <div className="mt-6">
-          <h3 className="text-xl font-bold text-center">CGPA: {cgpa.toFixed(2)}</h3>
+          <h3 className={`text-3xl font-bold text-center ${getCgpaColorClass(cgpa)}`}>CGPA: {cgpa.toFixed(2)}</h3>
         </div>
       </div>
       {downloading && (
@@ -120,9 +130,6 @@ const SemesterMarksCalculator = () => {
     </div>
 
     </div>
-
-
-
 
     </>
   );
