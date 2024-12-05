@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import fileDownload from 'js-file-download';
 import html2canvas from 'html2canvas';
