@@ -48,20 +48,33 @@ const SemesterMarksCalculator = () => {
 
   const downloadAsImage = () => {
     setDownloading(true);
-    html2canvas(document.getElementById('calculator-container')).then(canvas => {
-      canvas.toBlob(blob => {
-        fileDownload(blob, 'semester_marks.png');
+  
+    const element = document.getElementById('calculator-container');
+    
+    // Create a canvas for full page capture
+    html2canvas(element, {
+      scale: 2, // Increase resolution
+      useCORS: true, // Allow cross-origin images
+    }).then((canvas) => {
+      // Convert the canvas to an image
+      canvas.toBlob((blob) => {
+        if (blob) {
+          fileDownload(blob, 'semester_marks_calculator.png');
+        }
         setDownloading(false);
       });
+    }).catch((err) => {
+      console.error("Error capturing the screenshot:", err);
+      setDownloading(false);
     });
   };
-
+  
   const getCgpaColorClass = (cgpa) => {
-    if (cgpa >= 5.1 && cgpa <= 6.0) return 'text-red-500'; 
-    if (cgpa >= 6.1 && cgpa <= 7.0) return 'text-orange-500'; 
-    if (cgpa >= 7.1 && cgpa <= 8.0) return 'text-yellow-500'; 
-    if (cgpa >= 8.1 && cgpa <= 9.0) return 'text-green-500'; 
-    if (cgpa >= 9.1 && cgpa <= 10.0) return 'bg-gradient-to-b from-purple-500 to-blue-400 bg-clip-text text-transparent'; 
+    if (cgpa >= 5.1 && cgpa <= 6.0) return 'text-red-600'; 
+    if (cgpa >= 6.01 && cgpa <= 7.0) return 'text-orange-600'; 
+    if (cgpa >= 7.01 && cgpa <= 8.0) return 'text-yellow-400'; 
+    if (cgpa >= 8.01 && cgpa <= 9.0) return 'text-green-500'; 
+    if (cgpa >= 9.01 && cgpa <= 10.0) return 'text-purple-500'; 
     return 'text-white'; 
   };
   
@@ -105,16 +118,16 @@ const SemesterMarksCalculator = () => {
           </div>
         ))}
         <div className="flex justify-center space-x-4">
-          <button onClick={addSubject} className="bg-blue-500 hover:bg-blue-600 w-60 text-white  font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
+          <button onClick={addSubject} className="bg-yellow-500 hover:bg-yellow-300 w-60 text-white  font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
             Add Subject
           </button>
-          <button onClick={calculateCgpa } className="bg-green-500 hover:bg-green-600 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline">
+          <button onClick={calculateCgpa } className="bg-blue-500 hover:bg-blue-400 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline">
             Calculate CGPA
           </button>
           
         </div>
         <div className='flex items-center justify-center pt-5'>
-        <button onClick={downloadAsImage} className="bg-gray-500 hover:bg-gray-600 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline">
+        <button onClick={downloadAsImage} className="bg-red-500 hover:bg-red-400 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline">
             Download as Image
           </button>
         </div>
