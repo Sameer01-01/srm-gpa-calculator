@@ -8,10 +8,9 @@ const SemesterMarksCalculator = () => {
   const [downloading, setDownloading] = useState(false);
 
   const calculateCgpa = () => {
-   
     let totalCredits = 0;
     let totalGradePoints = 0;
-    marks.forEach(mark => {
+    marks.forEach((mark) => {
       let credit = mark.credit;
       let grade = mark.grade;
       let gradePoint = 0;
@@ -46,104 +45,122 @@ const SemesterMarksCalculator = () => {
     }
   };
 
+  const deleteSubject = (index) => {
+    const updatedMarks = marks.filter((_, i) => i !== index);
+    setMarks(updatedMarks);
+  };
+
   const downloadAsImage = () => {
     setDownloading(true);
-  
+
     const element = document.getElementById('calculator-container');
-    
-    // Create a canvas for full page capture
+
     html2canvas(element, {
-      scale: 2, // Increase resolution
-      useCORS: true, // Allow cross-origin images
-    }).then((canvas) => {
-      // Convert the canvas to an image
-      canvas.toBlob((blob) => {
-        if (blob) {
-          fileDownload(blob, 'semester_marks_calculator.png');
-        }
+      scale: 2, 
+      useCORS: true, 
+    })
+      .then((canvas) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            fileDownload(blob, 'semester_marks_calculator.png');
+          }
+          setDownloading(false);
+        });
+      })
+      .catch((err) => {
+        console.error('Error capturing the screenshot:', err);
         setDownloading(false);
       });
-    }).catch((err) => {
-      console.error("Error capturing the screenshot:", err);
-      setDownloading(false);
-    });
   };
-  
+
   const getCgpaColorClass = (cgpa) => {
-    if (cgpa >= 5.1 && cgpa <= 6.0) return 'text-red-600'; 
-    if (cgpa >= 6.01 && cgpa <= 7.0) return 'text-orange-600'; 
-    if (cgpa >= 7.01 && cgpa <= 8.0) return 'text-yellow-400'; 
-    if (cgpa >= 8.01 && cgpa <= 9.0) return 'text-green-500'; 
-    if (cgpa >= 9.01 && cgpa <= 10.0) return 'text-purple-500'; 
-    return 'text-white'; 
+    if (cgpa >= 5.1 && cgpa <= 6.0) return 'text-red-600';
+    if (cgpa >= 6.01 && cgpa <= 7.0) return 'text-orange-600';
+    if (cgpa >= 7.01 && cgpa <= 8.0) return 'text-yellow-400';
+    if (cgpa >= 8.01 && cgpa <= 9.0) return 'text-green-500';
+    if (cgpa >= 9.01 && cgpa <= 10.0) return 'text-purple-500';
+    return 'text-white';
   };
-  
 
   return (
     <>
-    <div className='text-center bg-black p-5'>
-
-    <span className=" bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-4xl inline-block font-bold">SRM GPA Calculator</span>
-    </div>
-    <div className='bg-black min-h-screen w-full'>
-    <div className="flex justify-center items-center h-full ">
-      <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[70px]" id="calculator-container">
-     
-        {marks.map((mark, index) => (
-          <div key={index} className="mb-4 flex justify-center items-center ">
-            <span className="mr-4 text-lg font-semibold">{index + 1}.</span>
-            <input
-              type="number"
-              placeholder="Credit"
-              value={mark.credit}
-              onChange={(e) => handleMarksChange(index, parseInt(e.target.value), 'credit')}
-              className="w-3/4 py-2 px-4 mr-2 rounded-lg border text-white border-gray-300 bg-black focus:outline-none focus:border-blue-500"
-            />
-            <select
-              value={mark.grade}
-              onChange={(e) => handleMarksChange(index, e.target.value, 'grade')}
-              className="w-3/4 py-2 px-4 mr-2 rounded-lg border border-gray-300 bg-black text-white focus:outline-none focus:border-blue-500"
-            >
-              <option value="">Select Grade</option>
-              <option value="O">O</option>
-              <option value="A+">A+</option>
-              <option value="A">A</option>
-              <option value="B+">B+</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="F">F</option>
-              <option value="A">A (Absent)</option>
-              <option value="I">I (Low Attendance)</option>
-            </select>
+      <div className="text-center bg-black p-5">
+        <span className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-4xl inline-block font-bold">
+          SRM GPA Calculator
+        </span>
+      </div>
+      <div className="bg-black min-h-screen w-full">
+        <div className="flex justify-center items-center h-full">
+          <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[70px]" id="calculator-container">
+            {marks.map((mark, index) => (
+              <div key={index} className="mb-4 flex justify-center items-center space-x-2">
+                <span className="mr-4 text-lg font-semibold">{index + 1}.</span>
+                <input
+                  type="number"
+                  placeholder="Credit"
+                  value={mark.credit}
+                  onChange={(e) => handleMarksChange(index, parseInt(e.target.value), 'credit')}
+                  className="w-3/4 py-2 px-4 rounded-lg border text-white border-gray-300 bg-black focus:outline-none focus:border-blue-500"
+                />
+                <select
+                  value={mark.grade}
+                  onChange={(e) => handleMarksChange(index, e.target.value, 'grade')}
+                  className="w-3/4 py-2 px-4 rounded-lg border border-gray-300 bg-black text-white focus:outline-none focus:border-blue-500"
+                >
+                  <option value="">Select Grade</option>
+                  <option value="O">O</option>
+                  <option value="A+">A+</option>
+                  <option value="A">A</option>
+                  <option value="B+">B+</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="F">F</option>
+                  <option value="A">A (Absent)</option>
+                  <option value="I">I (Low Attendance)</option>
+                </select>
+                <button
+                  onClick={() => deleteSubject(index)}
+                  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={addSubject}
+                className="bg-yellow-500 hover:bg-yellow-300 w-60 text-white font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                Add Subject
+              </button>
+              <button
+                onClick={calculateCgpa}
+                className="bg-blue-500 hover:bg-blue-400 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                Calculate CGPA
+              </button>
+            </div>
+            <div className="flex items-center justify-center pt-5">
+              <button
+                onClick={downloadAsImage}
+                className="bg-[#e31cc8] hover:bg-pink-400 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                Download as Image
+              </button>
+            </div>
+            <div className="mt-6">
+              <h3 className={`text-3xl font-bold text-center ${getCgpaColorClass(cgpa)}`}>
+                CGPA: {cgpa.toFixed(2)}
+              </h3>
+            </div>
           </div>
-        ))}
-        <div className="flex justify-center space-x-4">
-          <button onClick={addSubject} className="bg-yellow-500 hover:bg-yellow-300 w-60 text-white  font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
-            Add Subject
-          </button>
-          <button onClick={calculateCgpa } className="bg-blue-500 hover:bg-blue-400 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline">
-            Calculate CGPA
-          </button>
-          
-        </div>
-        <div className='flex items-center justify-center pt-5'>
-        <button onClick={downloadAsImage} className="bg-red-500 hover:bg-red-400 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline">
-            Download as Image
-          </button>
-        </div>
-        <div className="mt-6">
-          <h3 className={`text-3xl font-bold text-center ${getCgpaColorClass(cgpa)}`}>CGPA: {cgpa.toFixed(2)}</h3>
+          {downloading && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <p className="text-white">Downloading...</p>
+            </div>
+          )}
         </div>
       </div>
-      {downloading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <p className="text-white">Downloading...</p>
-        </div>
-      )}
-    </div>
-
-    </div>
-
     </>
   );
 };
