@@ -84,14 +84,14 @@ const SemesterMarksCalculator = () => {
 
   return (
     <>
-      <div className="text-center bg-black p-5">
-        <span className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-4xl inline-block font-bold">
+      <div className="text-center overflow-hidden bg-black p-5">
+        <span className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-5xl inline-block font-bold">
           SRM GPA Calculator
         </span>
       </div>
-      <div className="bg-black min-h-screen w-full">
+      <div className="bg-black min-h-screen w-full over">
         <div className="flex justify-center items-center h-full">
-          <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[70px]" id="calculator-container">
+          <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[50px]" id="calculator-container">
             {marks.map((mark, index) => (
               <div key={index} className="mb-4 flex justify-center items-center space-x-2">
                 <span className="mr-4 text-lg font-semibold">{index + 1}.</span>
@@ -129,13 +129,13 @@ const SemesterMarksCalculator = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={addSubject}
-                className="bg-yellow-500 hover:bg-yellow-300 w-60 text-white font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                className="bg-yellow-500 hover:bg-yellow-300 w-60 duration-1000 text-white font-bold ml-6 py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
               >
                 Add Subject
               </button>
               <button
                 onClick={calculateCgpa}
-                className="bg-blue-500 hover:bg-blue-400 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 hover:bg-blue-400 duration-1000 w-60 text-white font-bold px-2 py-5 rounded-full focus:outline-none focus:shadow-outline"
               >
                 Calculate CGPA
               </button>
@@ -143,7 +143,7 @@ const SemesterMarksCalculator = () => {
             <div className="flex items-center justify-center pt-5">
               <button
                 onClick={downloadAsImage}
-                className="bg-[#e31cc8] hover:bg-pink-400 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                className="bg-[#e31cc8] hover:bg-pink-400 duration-1000 text-white font-bold w-60 py-4 px-4 rounded-full focus:outline-none focus:shadow-outline"
               >
                 Download as Image
               </button>
@@ -161,6 +161,12 @@ const SemesterMarksCalculator = () => {
           )}
         </div>
       </div>
+
+      <div className="bg-black -mt-20 text-center">
+                    <p className="text-gray-400">
+                        Made by <a href="https://github.com/Sameer01-01">Sameer</a>
+                    </p>
+                </div>
     </>
   );
 };
