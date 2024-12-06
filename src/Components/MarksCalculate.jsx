@@ -2,6 +2,14 @@
 import React, { useState } from 'react';
 import fileDownload from 'js-file-download';
 import html2canvas from 'html2canvas';
+import p1 from '../assets/p1.png'
+import p2 from '../assets/p2.png'
+import p3 from '../assets/p3.png'
+import p4 from '../assets/p4.png'
+import p5 from '../assets/p5.png'
+import p6 from '../assets/p6.png'
+import p7 from '../assets/p7.png'
+
 
 const SemesterMarksCalculator = () => {
   const [marks, setMarks] = useState(Array.from({ length: 5 }, () => ({ credit: 0, grade: '' })));
@@ -85,12 +93,30 @@ const SemesterMarksCalculator = () => {
 
   return (
     <>
-      <div className="text-center overflow-hidden bg-black p-5">
+      <div className="text-center overflow-hidden bg-black pt-6">
         <span className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent text-3xl md:text-5xl inline-block font-bold">
           SRM GPA Calculator
         </span>
       </div>
-      <div className="bg-black min-h-screen w-full over">
+
+      <div className=''>
+        <img src={p1} alt="" className='absolute w-40 ml-20 hidden lg:block'/>
+        <img src={p2} alt="" className='absolute w-40 ml-72 mt-[250px] hidden lg:block '/>
+        
+        <img src={p4} alt="" className='absolute w-40 ml-20 mt-[450px] hidden lg:block'/>
+        <img src={p5} alt="" className='absolute w-40 ml-[1250px] hidden lg:block'/>
+        <img src={p6} alt="" className='absolute w-40 ml-[1250px] mt-[450px] hidden lg:block'/>
+        <img src={p7} alt="" className='absolute w-40 ml-[1050px] mt-[250px] hidden lg:block'/>
+
+      </div>
+
+      {//<img src={gr1} alt="" className='absolute w-[600px] ml-[] mt-[60px]' />
+      //<img src={gr1} alt="" className='absolute w-[600px] ml-[910px]  -mt-[150px]' />
+      }
+
+
+
+      <div className="bg-black pb-[280px] md:pb-[520px] lg:pb-20">
         <div className="flex justify-center items-center h-full">
           <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[50px]" id="calculator-container">
             {marks.map((mark, index) => (
@@ -164,8 +190,9 @@ const SemesterMarksCalculator = () => {
       </div>
 
       <div className="bg-black -mt-20 text-center">
-                    <p className="text-gray-400">
-                        Made by <a href="https://github.com/Sameer01-01">Sameer</a>
+        <p className='text-gray-400'><a href="https://github.com/Sameer01-01/srm-gpa-calculator">Click for source code</a> </p>
+                    <p className="text-gray-400 pt-2">
+                         <a href="https://github.com/Sameer01-01"> Made by Sameer</a>
                     </p>
                 </div>
     </>
