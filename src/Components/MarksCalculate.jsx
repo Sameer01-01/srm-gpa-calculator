@@ -116,7 +116,7 @@ const SemesterMarksCalculator = () => {
 
 
 
-      <div className="bg-black pb-[280px] md:pb-[520px] lg:pb-20">
+      <div className="bg-black w-full min-h-screen ">
         <div className="flex justify-center items-center h-full">
           <div className="w-full max-w-md p-6 mt-[60px] lg:mt-[50px]" id="calculator-container">
             {marks.map((mark, index) => (
